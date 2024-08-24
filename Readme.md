@@ -1,7 +1,9 @@
 # Demo test project in Playwright and JUnit 5 to verify a simple Kubernetes app
 
 ## Requirements
-
+- docker
+- minikube
+- kubectl
 
 ## Run Kubernetes app locally
 
@@ -36,4 +38,8 @@ kubectl get services
 ## Run tests
 ```shell
 NGINX_BASE_URL=$NGINX_BASE_URL mvn test
+```
+### Run in headful mode
+```shell
+HEADLESS=true NGINX_BASE_URL=$NGINX_BASE_URL mvn test
 ```

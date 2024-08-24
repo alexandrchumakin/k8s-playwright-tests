@@ -16,7 +16,10 @@ class NginxTest {
     @BeforeAll
     fun setUp() {
         playwright = Playwright.create()
-        browser = playwright.chromium().launch(BrowserType.LaunchOptions().setHeadless(false))
+        browser = playwright.chromium().launch(
+            BrowserType.LaunchOptions()
+                .setHeadless((System.getenv("HEADLESS") ?: "true").toBoolean())
+        )
         page = browser.newPage()
         page.navigate(baseUrl)
     }
