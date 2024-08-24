@@ -1,0 +1,45 @@
+name: K8s Playwright Tests
+jobs:
+  Job1:
+    name: Job 1
+    steps:
+      - type: maven
+        working-directory: ''
+        goals: compile
+      - type: script
+        script-content: >-
+          sudo apt-get update
+
+          sudo apt-get install kubectl curl 
+
+          curl -LO
+          https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm
+          minikube-linux-amd64
+
+          minikube version
+
+
+          minikube start
+
+          kubectl create deployment nginx --image=nginx
+
+          kubectl expose deployment nginx --type=NodePort --port=80
+
+          nohup minikube service nginx --url 2>&1 > nohup.out & 
+
+          sleep 1
+
+          cat nohup.out
+
+          NGINX_BASE_URL=$(grep -Eo 'http://[^ >]+' nohup.out|head -1)
+
+
+          echo "base url: $NGINX_BASE_URL"
+
+          NGINX_BASE_URL=$NGINX_BASE_URL mvn test
+    runs-on: Linux-Medium
+    enable-dependency-cache: true
+    files-publication:
+      - nohup.out
