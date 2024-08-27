@@ -41,5 +41,5 @@ NGINX_BASE_URL=$NGINX_BASE_URL mvn test
 ```
 ### Run in headful mode
 ```shell
-HEADLESS=true NGINX_BASE_URL=$NGINX_BASE_URL mvn test
+HEADFUL=true NGINX_BASE_URL=$NGINX_BASE_URL mvn test
 ```
